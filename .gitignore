@@ -1,6 +1,7 @@
 *
 !*.tex
 !*.pdf
+!*.eps
 !*.gitkeep
 !.gitignore
 !fig/
