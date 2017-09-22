@@ -1,0 +1,94 @@
+%!TEX encoding = UFT-8
+
+\documentclass{report}
+\usepackage[tc]{titlepic}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{ifthen}
+
+\graphicspath{{fig/}}
+
+\newcommand\Titre{Livrable 1}
+\newcommand\Auteur{Maxence Caron, Danick Proulx, Samuel Labrecque, Laurent Drolet}
+\newcommand\Destinataire{Teacher's name}
+\newcommand\NomEquipe{Mp3}
+\newcommand\DateRemise{\today}
+
+
+\geometry{letterpaper,%
+          centering,%
+          hmargin={2.5cm,2.5cm},%
+          vmargin={2.5cm,2.5cm},%
+          heightrounded,%
+	  includehead}
+
+
+\newenvironment{thebibliographyUL}[1]%
+               {\clearpage%
+                \begin{thebibliography}{#1}%
+                \addcontentsline{toc}{chapter}{\bibname}%
+                \raggedright%
+               }%
+               {\end{thebibliography}}
+
+\renewcommand\maketitle{
+	\thispagestyle{empty}%
+	\pagenumbering{roman}%
+	\begin{titlepage}%
+		\setcounter{page}{999}%
+		\begin{flushleft}
+			\includegraphics[width=12em]{ul_logo}
+		\end{flushleft}\par
+		\vspace*{\stretch{2}}
+			\centering
+			\parbox{\textwidth}{\centering\Large\bfseries \Titre}         \\[5ex]
+			\vspace*{\stretch{2}}
+			pr\'{e}sent\'{e} \`{a}                    \\[1ex]
+			\textbf{\Destinataire}                 \\
+			\vspace*{\stretch{1}}
+		par                                       \\[1ex]
+			{\large \'{E}quipe \NomEquipe}                \\[1ex]
+			\Auteur\\[1ex]
+			\vspace*{\stretch{1}}
+			{\large Universit\'{e} Laval}             \\
+			\DateRemise\\
+	\end{titlepage}
+}
+
+% Definition du niveau hierarchique maximum couvert par la table des matieres
+\setcounter{tocdepth}{3}            % default = 2
+
+% Definition du niveau hierarchique maximum ayant une numerotation
+\setcounter{secnumdepth}{3}         % default = 2
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+		\ifthenelse{\boolean{false}}%
+			{\clearpage%
+			\listoffigures%
+			\addcontentsline{toc}{chapter}{\listfigurename}}{}
+		\ifthenelse{\boolean{false}}%
+			{\clearpage%
+			\listoftables%
+			\addcontentsline{toc}{chapter}{\listtablename}}{}
+
+\cleardoublepage%
+\setcounter{page}{1}%
+\pagenumbering{arabic}%
+
+\input{tex/enonce_vision}
+% chap 2
+\input{tex/classe_concept}
+% chap 3
+\input{tex/glossaire}
+% chap 4
+\input{tex/cas_utilisation}
+% chap 4
+\input{tex/contribution_equipe}
+
+\end{document}
+
