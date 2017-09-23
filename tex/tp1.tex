@@ -3,34 +3,35 @@
 MAC destination: 90 06 28 5E 4C 01 
 MAC source: 64 5A 04 BA F2 31
 Protocole de couche supérieure: 08 00 (IPv4)
+
 \section{Question 2}
 L'adresse IP permet de déterminer où exactement envoyer l'information  en donnant des détails sur la localisation géographique, sur comment l'ordinateur est connecté a un réseau et d'identifier l'ordinateur sur le réseau.
 
 La seule façon de faire fonctionner un réseau en
 utilisant uniquement des adresses MAC serait de
-stocker toutes les adresses MAC existantes dans
-chaque routeur, ce qui n’est pas pratique.
+stocker toutes les adresses MAC existantes dans le monde
+dans chaque routeur, ce qui n’est pas pratique.
 
 \section{Question 3}
-\begin{itemize}
+\begin{enumerate}[(a)]
 	\item Lorsqu'un ordinateur veut envoyer un paquet à un autre en connaissant uniquement son adresse IP (et non son adresse MAC), il envoie une requête avec FF:FF:FF:FF:FF:FF comme adresse MAC de destination. Celle-ci est reconnue comme une requête d'adresse MAC par tous les ordinateurs et ceux-ci renvoient leur adresse MAC ainsi que leur adresse IP.
 	\item adresse MAC : 90:06:28:5e:4c:01
 	adresse IP : 10.248.100.164
 	\item Non, car après avoir reçu la réponse de
 	la requête, l'adresse MAC est stockée en cache
 	 avec l'adresse IP correspondante.
-\end{itemize}
+\end{enumerate}
 
 \section{Question 4}
-\begin{itemize}
+\begin{enumerate}[(a)]
 	\item Paquet 1: Time to live décimal : 64. En format hexadécimal, cela fait 40. 
 	Paquet 2: Time to live décimal : 240. En format hexadécimal, cela fait f0.
 	\item La valeur du Time to live peut être entre 0 et 255. Cela fait 256, ou 2⁸ valeurs possibles. La valeur tient donc sur 8 bits.
 
 	\item Le deuxième paquet a traversé 15 routeurs avant d'atteindre 10.0.9.128.
-\end{itemize}
+\end{enumerate}
 \section{Question 5}
-L'adresse 192.168.1.148 est l'ordinateur qui effectue le ping, qui envoie la requête. Celle-ci passe par le routeur, qui a l'adresse 192.168.1.1 et qui transmet le paquet à l'adresse de destination, 172.217.1.68 (dans ce cas, c'est Google). Celui-ci répond alors à l'ordinateur à l'adresse 192.168.1.148, permettant de déterminer le temps de réponse.
+L'adresse 192.168.1.148 est l'ordinateur qui effectue le ping et qui envoie la requête. Celle-ci passe par le routeur à l'adresse 192.168.1.1 qui ensuite retransmet le paquet à l'adresse de destination, 172.217.1.68, qui correspond à Google. Le destinataire répond alors à l'ordinateur à l'adresse 192.168.1.148, ce qui permet à l'ordinateur source de déterminer le temps de réponse.
 \section{Question 6}
 Les réponses sont de type 3 (Destination unreachable) et le code est 13 (Communication administratively filtered).
-Une cause possible serait un pare-feu qui bloque la requête.
+Une cause possible serait un pare-feu administratif qui bloque la requête.
