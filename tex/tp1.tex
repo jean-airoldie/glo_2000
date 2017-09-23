@@ -23,5 +23,14 @@ chaque routeurs, ce qui est pas pratique.
 
 \section{Question 4}
 \begin{itemize}
-	\item 
+	\item Paquet 1: Time to live décimal : 64. En format hexadécimal, cela fait 40. 
+	Paquet 2: Time to live décimal : 240. En format hexadécimal, cela fait f0.
+	\item La valeur du Time to live peut être entre 0 et 255. Cela fait 256, ou 2⁸ valeurs possibles. La valeur tient donc sur 8 bits.
+
+	\item Le deuxième paquet a traversé 15 routeurs avant d'atteindre 10.0.9.128.
 \end{itemize}
+\section{Question 5}
+L'adresse 192.168.1.148 est l'ordinateur qui effectue le ping, qui envoie la requête. Celle-ci passe par le routeur, qui a l'adresse 192.168.1.1 et qui transmet le paquet à l'adresse de destination, 172.217.1.68 (dans ce cas, c'est Google). Celui-ci répond alors à l'ordinateur à l'adresse 192.168.1.148, permettant de déterminer le temps de réponse.
+\section{Question 6}
+Les réponses sont de type 3 (Destination unreachable) et le code est 13 (Communication administratively filtered).
+Une cause possible serait un pare-feu qui bloque la requête.
