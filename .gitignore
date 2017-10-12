@@ -5,3 +5,6 @@
 *.lof
 *.lot
 *.toc
+*.cap
+*.gcap
+*.gz
