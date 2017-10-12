@@ -59,6 +59,14 @@
 	\end{titlepage}
 }
 
+% No section numbering
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
 % Definition du niveau hierarchique maximum couvert par la table des matieres
 \setcounter{tocdepth}{3}            % default = 2
 
