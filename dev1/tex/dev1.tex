@@ -65,14 +65,15 @@
 
 \section{Question 4}
 \begin{enumerate}[(a)]
-	\item 
-		utilisation max du canal = $\frac{1000 bits}{2 * 0.250s} = 2000\frac{bits}{s}$
-	\item
-		$W = 2^n-1 = 2^(3bits)-1 = 7 trames$\\
-		utilisation max du canal = $\frac{7 * 1000 bits}{2 * 0.250s} = 14000\frac{bits}{s}$
-	\item
-		$W = 2^n-1 = 2^(3bits)-1 = 7 trames$\\
-		utilisation max du canal = $\frac{7 * 1000 bits}{2 * 0.250s} = 14000\frac{bits}{s}$
+	\item  $T_{x} = \frac{Taille_{trame}}{vitesse_{transmission}}$ \\
+Donc, l'utilisation max du canal = $\frac{T_{x}}{T_{x}+T_{propagation}}$ 
+		=  $\frac{1 ms}{1+(2 * 250ms)} \approx 0,2\%$
+	\item Taux d'utilisation maximal = $\frac{\omega}{1+2BD}$, où 
+		$\omega = 2^n-1 = 2^(3bits)-1 = 7$\\
+		Donc, l'utilisation max du canal = $\frac{7}{1+(2 * 250ms)} \approx 1,397\%$
+	\item C'est le même calcul, mais le calcul d'oméga change:
+		$\omega = 2^{(n-1)} = 2^{(3-1bits)} = 4  trames$\\
+		Donc, l'utilisation max du canal = $\frac{4}{1+(2 * 250ms)} \approx 0,798\%$
 \end{enumerate}
 
 \section{Question 5}
