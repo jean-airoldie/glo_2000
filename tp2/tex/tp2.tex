@@ -2,12 +2,30 @@
 \section{Question 1}
 \begin{enumerate}
 	\item 
-	\begin{enumerate}[(a)]
+	\begin{enumerate}[a)]
 		\item 
+			commande : \verb!sudo nping www.cisco.com --tcp -g 1337 -p 80 --flags SYN -c 1!\\
+			nom du fichier trace réseau : TP2\_Q1\_a.pcapng
 		\item 
+			commande : \verb!sudo nping wikipedia.org --udp -g 9999 -p 80 -c 1!\\
+			nom du fichier trace réseau : TP2\_Q1\_b.pcapng
 		\item 
+			commande : \verb!sudo nping www.imdb.com --tcp -g 11111 -p 80 --flag RST -c 1!\\
+			nom du fichier trace réseau : TP2\_Q1\_c.pcapng
 	\end{enumerate}
 	\item 
+		\begin{enumerate}
+			\item
+				Le port de destination (-p) doit être 80 
+				car c'est le port que les serveurs ecoutent.
+			\item
+				L'adresse ip source (-S) n'est pas la bonne,
+				la réponse ne sera donc pas envoyer à la bonne
+				adresse.
+			\item
+				Le time to live du packet (--ttl) est trop court
+				pour se rendre a destination.
+		\end{enumerate}
 \end{enumerate}
 
 \section{Question 2}
