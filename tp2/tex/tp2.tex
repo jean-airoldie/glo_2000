@@ -29,15 +29,15 @@
 \end{enumerate}
 
 \section{Question 2}
-C'est un programme de type traceroute qui envoit plusieurs packets, 
-en incrementant le TTL afin de connaitre le chemin emprunter 
-par les packets vers une adresse de destination. 
+C'est un programme de type traceroute qui envoit des packets, 
+en incrementant le TTL jusqu'a ce que l'adresse de destination soit 
+atteinte, afin de connaitre le chemin emprunter par les packets. 
 A chaque fois qu'un routeur recoit un packet, 
 celui-ci decrement le TTL, et lorsque celui-ci atteint 0,
 le routeur envoit un packet ICMP vers l'adresse source pour lui
-communiquer l'erreur "Time-to-live-exceeded". Ainsi lorsque l'adresse
-source recoit ces packets ICMP, elle peux connaitre le chemin du
-packet, étape par étape.
+communiquer l'erreur "Time-to-live-exceeded". Ainsi, lorsque 
+l'adresse source recoit ces packets ICMP, 
+elle peux connaitre le chemin du packet, étape par étape.
 
 \section{Question 3}
 
