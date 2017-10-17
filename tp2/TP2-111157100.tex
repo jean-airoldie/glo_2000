@@ -1,0 +1,98 @@
+
+
+\documentclass{report}
+
+\usepackage[tc]{titlepic}
+\usepackage[utf8x]{inputenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{ifthen}
+\usepackage{enumerate}
+
+\graphicspath{{fig/}}
+
+\newcommand\Titre{Devoir 1}
+\newcommand\Auteur{Maxence Caron, Jules Caron, Hugues Soares}
+\newcommand\Destinataire{Ronald Beaubrun}
+\newcommand\NomEquipe{GLO-2000}
+\newcommand\DateRemise{\today}
+
+
+\geometry{letterpaper,%
+          centering,%
+          hmargin={2.5cm,2.5cm},%
+          vmargin={2.5cm,2.5cm},%
+          heightrounded,%
+	  includehead}
+
+
+\newenvironment{thebibliographyUL}[1]%
+               {\clearpage%
+                \begin{thebibliography}{#1}%
+                \addcontentsline{toc}{chapter}{\bibname}%
+                \raggedright%
+               }%
+               {\end{thebibliography}}
+
+\renewcommand\maketitle{
+	\thispagestyle{empty}%
+	\pagenumbering{roman}%
+	\begin{titlepage}%
+		\setcounter{page}{999}%
+		\begin{flushleft}
+			\includegraphics[width=12em]{ul_logo}
+		\end{flushleft}\par
+		\vspace*{\stretch{1}}
+			\centering
+			\parbox{\textwidth}{\centering\Large\bfseries \Titre}         \\[5ex]
+			\vspace*{\stretch{2}}
+			pr\'{e}sent\'{e} \`{a}                    \\[1ex]
+			\textbf{\Destinataire}                 \\
+			\vspace*{\stretch{1}}
+		par                                       \\[1ex]
+			{\large \'{E}quipe \NomEquipe}                \\[1ex]
+			\Auteur\\[1ex]
+			\vspace*{\stretch{1}}
+			{\large Universit\'{e} Laval}             \\
+			\DateRemise\\
+	\end{titlepage}
+}
+
+% No section numbering
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+% Definition du niveau hierarchique maximum couvert par la table des matieres
+\setcounter{tocdepth}{3}            % default = 2
+
+% Definition du niveau hierarchique maximum ayant une numerotation
+\setcounter{secnumdepth}{3}         % default = 2
+
+\begin{document}
+
+\maketitle
+%\tableofcontents
+%		\ifthenelse{\boolean{false}}%
+%			{\clearpage%
+%			\listoffigures%
+%			\addcontentsline{toc}{chapter}{\listfigurename}}{}
+%		\ifthenelse{\boolean{false}}%
+%			{\clearpage%
+%			\listoftables%
+%			\addcontentsline{toc}{chapter}{\listtablename}}{}
+
+\cleardoublepage%
+\setcounter{page}{1}%
+\pagenumbering{arabic}%
+
+\chapter{Réseaux - lab 4}
+
+\input{tex/tp2}
+
+\end{document}
+
