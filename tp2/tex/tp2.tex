@@ -40,6 +40,16 @@ l'adresse source recoit ces packets ICMP,
 elle peux connaitre le chemin du packet, étape par étape.
 
 \section{Question 3}
+2-way handshake vs 3-way handshake:
+Considérant deux utilisateurs qui s’envoient des messages, le 2-way handshake permettrait seulement à un des deux utilisateurs d’établir un ISN (Initial Sequence Number) et l’autre personne de le reconnaître (Le ISN permet aux utilisateur de garder une trace de qu’est-ce qu’ils ont envoyé). Alors, seulement un utilisateur pourrait envoyer des données. Le protocole de communication TCP est bidirectionnel et donc les deux utilisateurs ont besoins de d’établir un ISN pour envoyer des données.
+
+\vspace{5mm} %5mm vertical space
+Dans le 3-way handshake, l’utilisateur 1 se synchronise avec  son ISN (SYN), l’utilisateur 2 reconnaît le ISN de l’utilisateur 1 (ACK) et l’utilisateur 2 se synchronise avec son ISN (SYN). Finalement, l’utilisateur 1 reconnaît le ISN de l’utilisateur 2 (ACK). Le ACK et le SYN (étape 2 et étape 3), sont envoyés en un paquet par l’utilisateur 2.
+\vspace{5mm} %5mm vertical space
+\vspace{5mm} %5mm vertical space
+
+4-way handshake vs 3-way handshake:
+Dans le 4-way handshake, le SYN et le ACK (voir étape 2 et étape 3 plus haut) sont envoyés en deux paquets distincts et cela délait le handshake. Par exemple, un client envoit une SYN et le server répond avec un ACK pour reconnaître que le client veut établir une connection (il n’y donc pas encore de connection à ce moment). Après, le server envoit un SYN et reçoit le ACK du client et c’est à ce moment que la connection est établie.
 
 \section{Question 4}
 \begin{enumerate}
