@@ -43,7 +43,7 @@ elle peux connaitre le chemin du packet, étape par étape.
 
 \section{Question 4}
 \begin{enumerate}
-	\item 
-	\item 
+	\item Le mode TCP génère deux paquets alors que le mode UDP en génère qu'un seul. C'est parce que le recepteur du paquet en mode TCP envoie un ACK pour signifier à l'émetteur qu'il a bien reçu le paquet. À l'inverse, l'émetteur en UDP ne sait pas si le paquet s'est rendu à destination. Il n'y a aucune correction d'erreur.
+	\item La commande pour démarrer le serveur dans Ncat est : ncat -u -l -p 1337 \\ La commande pour envoyer 5 fois le mot bonjour est : \\ nping --udp -p 1337 -c 5 --data-string "bonjour" localhost
 \end{enumerate}
 
