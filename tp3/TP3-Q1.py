@@ -8,7 +8,7 @@ import logging, datetime as dt
 
 # Choisissez l’adresse avec l’option -a et le port avec -p
 parser = optparse.OptionParser()
-parser.add_option("-s", "--server", action="store_true", dest="serveur", default=False)
+parser.add_option("-s", "--serveur", action="store_true", dest="serveur", default=False)
 parser.add_option("-d", "--destination", action="store", dest="destination", default=None)
 parser.add_option("-p", "--port", action="store", dest="port", type=int, default=None)
 opts = parser.parse_args(sys.argv[1:])[0]
@@ -19,7 +19,7 @@ def main():
     if type(opts.port) is not int:
         raise ValueError("The --port value must be assigned")
     if opts.serveur == True and opts.destination is not None:
-        raise ValueError("Args --destination and --server are mutially exclusive")
+        raise ValueError("Args --destination and --server are mutually exclusive")
     if opts.serveur: 
         # En mode serveur
         """ Setup socket """
