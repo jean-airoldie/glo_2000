@@ -95,6 +95,13 @@ def courriel(s, username):
                 except:
                     msg = "L’envoi n’a pas pu etre effectue."
                 send_msg(s,msg)
+        elif (number == "2"):
+            # TODO:
+        elif (number == "3"):
+            # TODO:
+        elif (number == "4"):
+            quit()
+
 
 
 
