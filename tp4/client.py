@@ -2,7 +2,7 @@ from socketUtil import recv_msg, send_msg
 import getpass
 import socket
 import re
-
+import os.path
 def main():
     s = connection()
     try:
@@ -54,23 +54,23 @@ def menu(s):
         if(number != "1" and number != "2" and number != "3"and number != "4"):
             print("Veuillez choisir une option valide")
         else:
-            send_msg(number)
+            send_msg(s,number)
             if(number == "1"):
-            serverConfirmation = ""
-            while(not serverConfirmation == "Succes de l'envoi"):
-                emailDestination = ""
-                while (not re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
-                    emailDestination = input("Entrez une adresse courriel de destination\n")
-                    if(re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
-                        subject = input("Entrez le sujet du courriel\n")
-                        message = input("Entrez le corps du message\n")
-                        send_msg(s, emailDestination)
-                        send_msg(s, subject)
-                        send_msg(s, message)
-                        serverConfirmation = recv_msg(s)
-                        print(serverConfirmation)
-                    else:
-                        print("Adresse courriel invalide\n")
+                serverConfirmation = ""
+                while(not serverConfirmation == "Le courriel a bien ete envoye!"):
+                    emailDestination = ""
+                    while (not re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
+                        emailDestination = input("Entrez une adresse courriel de destination\n")
+                        if(re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
+                            subject = input("Entrez le sujet du courriel\n")
+                            message = input("Entrez le corps du message\n")
+                            send_msg(s, emailDestination)
+                            send_msg(s, subject)
+                            send_msg(s, message)
+                            serverConfirmation = recv_msg(s)
+                            print(serverConfirmation)
+                        else:
+                            print("Adresse courriel invalide\n")
 
 
 while 1:

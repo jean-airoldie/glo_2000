@@ -3,9 +3,11 @@ from socketUtil import recv_msg, send_msg
 import getpass
 import socket
 import os.path
+import sys
 import re
 import smtplib
 from email.mime.text import MIMEText
+import email.generator
 
 
 def main():
@@ -24,7 +26,7 @@ def main():
         while (not success):
             username = recv_msg(s)
             password = recv_msg(s)
-            configPath = os.getcwd() + "/{0}/config.txt".format(username)
+            configPath = os.path.join(getServerPath(),username, "config.txt")
             if number == "1":
                 if(os.path.exists(configPath)):
                     hashedPass = sha256(password.encode()).hexdigest()
@@ -42,9 +44,9 @@ def main():
                 if(os.path.exists(configPath)):
                     send_msg(s, "L'utilisateur existe deja!")
                 else:
-                    if(re.search(r"(?=[^a-zA-Z]*[a-zA-Z])(?=[^\d]*\d+)(^.{6,12}$)", password)):
+                    if(re.search(r"(?=[^a-zA-Z]*[a-zA-Z])(?=[^\d]*\d+)(^.{6,12}$)", password) and re.search(r"^[^@]+@[^@]+\.[^@]+$", username):
                         hashedPass = sha256(password.encode()).hexdigest()
-                        os.makedirs(os.path.dirname(configPath), exist_ok=True)
+                        os.makedirs(os.path.join(getServerPath(),username), exist_ok=True)
                         with open(configPath, "w") as configFile:
                             configFile.write(hashedPass)
                             send_msg(s, "Creation de l'utilisateur terminee")
@@ -52,7 +54,8 @@ def main():
                             courriel(s, username)
                     else:
                         send_msg(s, "Erreur: le mot de passe doit etre compose de 6 a 12 \
-                            caracteres, dont au moins un chiffre et une lettre")
+                            caracteres, dont au moins un chiffre et une lettre et le nom d'utilisateur \
+                            doit etre une adresse courriel")
     except socket.error as msg:
         print ("Socket Error: %s" % msg)
     except TypeError as msg:
@@ -60,25 +63,43 @@ def main():
 
 
 def courriel(s, username):
-    number = ""
-    while (number != "1" and number != "2" and number != "3"and number != "4"):
-        number = recv_msg(s)
-    if (number == "1"):
-        emailDestination = ""
-        while (not re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
-            emailDestination = recv_msg(s)
-        subject = recv_msg(s)
-        message = recv_msg(s)
-        msgToSend = MIMEText(message)
-        msgToSend["From"] = username
-        msgToSend["To"] = emailDestination
-        msgToSend["Subject"] = subject
-        # if(re.search(r"^[^@]+(@reseauglo.ca)$", emailDestination)):
-        #     with open('filename.elm', 'w') as out:
-        #         gen = email.generator.Generator(out)
-        #         gen.flatten(msg)
+    while True:
+        number = ""
+        while (number != "1" and number != "2" and number != "3"and number != "4"):
+            number = recv_msg(s)
+        if (number == "1"):
+            emailDestination = ""
+            while (not re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
+                emailDestination = recv_msg(s)
+            subject = recv_msg(s)
+            message = recv_msg(s)
+            msgToSend = MIMEText(message)
+            msgToSend["From"] = username
+            msgToSend["To"] = emailDestination
+            msgToSend["Subject"] = subject
+            if(re.search(r"^[^.@]+(@reseauglo.ca)$", emailDestination)):
+                cheminDossierDestination = os.path.join(getServerPath(),emailDestination)
+                if os.path.exists(cheminDossierDestination):
+                    with open(os.path.join(cheminDossierDestination,subject + '.elm'), 'w') as out:
+                        gen = email.generator.Generator(out)
+                        gen.flatten(msgToSend)
+                    send_msg(s,"Succes de depot du courriel dans le dossier utilisateur")
+                else:
+                    send_msg(s,"Erreur : l'utilisateur n'existe pas")
+            else:
+                try:
+                    smtpConnection = smtplib.SMTP(host="smtp.ulaval.ca", timeout=10)
+                    smtpConnection.sendmail(msgToSend["From"], msgToSend["To"], msgToSend.as_string())
+                    smtpConnection.quit()
+                    msg = "Le courriel a bien ete envoye!"
+                except:
+                    msg = "L’envoi n’a pas pu etre effectue."
+                send_msg(s,msg)
 
 
+
+def getServerPath():
+    return os.path.dirname(os.path.realpath(__file__))
 
 while 1:
     if __name__ == '__main__':
