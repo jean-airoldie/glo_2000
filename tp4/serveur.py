@@ -44,7 +44,7 @@ def main():
                 if(os.path.exists(configPath)):
                     send_msg(s, "L'utilisateur existe deja!")
                 else:
-                    if(re.search(r"(?=[^a-zA-Z]*[a-zA-Z])(?=[^\d]*\d+)(^.{6,12}$)", password) and re.search(r"^[^@]+@[^@]+\.[^@]+$", username):
+                    if(re.search(r"(?=[^a-zA-Z]*[a-zA-Z])(?=[^\d]*\d+)(^.{6,12}$)", password) and re.search(r"^[^@]+@[^@]+\.[^@]+$", username)):
                         hashedPass = sha256(password.encode()).hexdigest()
                         os.makedirs(os.path.join(getServerPath(),username), exist_ok=True)
                         with open(configPath, "w") as configFile:
@@ -97,10 +97,12 @@ def courriel(s, username):
                 send_msg(s,msg)
         elif (number == "2"):
             # TODO:
+            pass
         elif (number == "3"):
             # TODO:
+            pass
         elif (number == "4"):
-            quit()
+            break
 
 
 

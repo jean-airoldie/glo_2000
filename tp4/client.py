@@ -48,29 +48,38 @@ def connection():
 
 
 def menu(s):
-    number = ""
-    while (number != "1" and number != "2" and number != "3"and number != "4"):
-        number = input("Menu principal\n1. Envoi de courriels\n2. Consultation de courriels\n3. Statistiques\n4. Quitter\n")
-        if(number != "1" and number != "2" and number != "3"and number != "4"):
-            print("Veuillez choisir une option valide")
-        else:
-            send_msg(s,number)
-            if(number == "1"):
-                serverConfirmation = ""
-                while(not serverConfirmation == "Le courriel a bien ete envoye!"):
-                    emailDestination = ""
-                    while (not re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
-                        emailDestination = input("Entrez une adresse courriel de destination\n")
-                        if(re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
-                            subject = input("Entrez le sujet du courriel\n")
-                            message = input("Entrez le corps du message\n")
-                            send_msg(s, emailDestination)
-                            send_msg(s, subject)
-                            send_msg(s, message)
-                            serverConfirmation = recv_msg(s)
-                            print(serverConfirmation)
-                        else:
-                            print("Adresse courriel invalide\n")
+    while True:
+        number = ""
+        while (number != "1" and number != "2" and number != "3"and number != "4"):
+            number = input("Menu principal\n1. Envoi de courriels\n2. Consultation de courriels\n3. Statistiques\n4. Quitter\n")
+            if(number != "1" and number != "2" and number != "3"and number != "4"):
+                print("Veuillez choisir une option valide")
+            else:
+                send_msg(s,number)
+                if(number == "1"):
+                    serverConfirmation = ""
+                    while(not serverConfirmation == "Le courriel a bien ete envoye!"):
+                        emailDestination = ""
+                        while (not re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
+                            emailDestination = input("Entrez une adresse courriel de destination\n")
+                            if(re.search(r"^[^@]+@[^@]+\.[^@]+$", emailDestination)):
+                                subject = input("Entrez le sujet du courriel\n")
+                                message = input("Entrez le corps du message\n")
+                                send_msg(s, emailDestination)
+                                send_msg(s, subject)
+                                send_msg(s, message)
+                                serverConfirmation = recv_msg(s)
+                                print(serverConfirmation)
+                            else:
+                                print("Adresse courriel invalide\n")
+                elif(number == "2"):
+                    # TODO:
+                    pass
+                elif(number == "3"):
+                    # TODO:
+                    pass
+                elif(number == "4"):
+                    quit()
 
 
 while 1:
