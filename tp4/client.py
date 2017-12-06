@@ -76,8 +76,12 @@ def menu(s):
                     # TODO:
                     pass
                 elif(number == "3"):
-                    # TODO:
-                    pass
+                    print("Nombre de messages contenu dans le dossier")
+                    obj.select('Inbox')
+                    print("Taille total du dossier en octets")
+                    filename = input("Nom du fichier : ")
+                    size = getsize(filename)
+                    print(str(size))
                 elif(number == "4"):
                     quit()
 
