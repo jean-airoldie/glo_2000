@@ -82,6 +82,9 @@ def menu(s):
                     filename = input("Nom du fichier : ")
                     size = getsize(filename)
                     print(str(size))
+
+                    input() # on attend que le user entre une touche pour retourner au menu
+                    
                 elif(number == "4"):
                     quit()
 
