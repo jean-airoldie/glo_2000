@@ -78,12 +78,12 @@ def courriel(s, username):
             msgToSend["To"] = emailDestination
             msgToSend["Subject"] = subject
             if(re.search(r"^[^.@]+(@reseauglo.ca)$", emailDestination)):
-                cheminDossierDestination = os.path.join(getServerPath(),emailDestination)
-                if os.path.exists(cheminDossierDestination):
-                    with open(os.path.join(cheminDossierDestination,subject + '.elm'), 'w') as out:
+                userPathDestination = os.path.join(getServerPath(),emailDestination)
+                if os.path.exists(userPathDestination):
+                    with open(os.path.join(userPathDestination,subject + '.elm'), 'w') as out:
                         gen = email.generator.Generator(out)
                         gen.flatten(msgToSend)
-                    send_msg(s,"Succes de depot du courriel dans le dossier utilisateur")
+                    send_msg(s,"Le courriel a bien ete envoye!")
                 else:
                     send_msg(s,"Erreur : l'utilisateur n'existe pas")
             else:
@@ -96,8 +96,41 @@ def courriel(s, username):
                     msg = "L’envoi n’a pas pu etre effectue."
                 send_msg(s,msg)
         elif (number == "2"):
-            # TODO:
-            pass
+            userPath = os.path.join(getServerPath(),username)
+            subjectsList = []
+            for fileName in os.listdir(userPath):
+                if fileName.split(".")[-1] == "elm":
+                    subject = ".".join(fileName.split(".")[:-1])
+                    subjectsList.append(subject)
+            strBuffer = "\n"
+            for i, subject in enumerate(subjectsList):
+                 strBuffer += "{} : {}\n".format(i+1, subject)
+            send_msg(s, strBuffer)
+            valid = False
+            while not valid:
+                subjectNumber = recv_msg(s)
+                assert subjectNumber
+                if int(subjectNumber) > 0 and int(subjectNumber) < len(subjectsList) + 1:
+                    valid = True
+                    send_msg(s, "valid_response")
+                else:
+                    send_msg(s, "invalid_response")
+            strBuffer = ""
+            with open(os.path.join(getServerPath(), username, "{}.elm".
+                                   format(subjectsList[int(subjectNumber) - 1])), "r") as f:
+                strBuffer = "\n"
+                for i, line in enumerate(f):
+                    if i > 3:
+                        strBuffer += line
+                strBuffer += "\n"
+            send_msg(s, strBuffer)
+
+
+
+
+
+
+
         elif (number == "3"):
             # TODO:
             pass

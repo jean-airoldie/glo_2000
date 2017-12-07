@@ -73,8 +73,23 @@ def menu(s):
                             else:
                                 print("Adresse courriel invalide\n")
                 elif(number == "2"):
-                    # TODO:
-                    pass
+                    subjectsList = recv_msg(s)
+                    print(subjectsList)
+                    valid = False
+                    while not valid:
+                        subjectNumber = input("Numero de sujet a consulter:")
+                        try:
+                            int(subjectNumber)
+                            assert subjectNumber
+                            send_msg(s, str(subjectNumber))
+                            response = recv_msg(s)
+                            valid = True if response == "valid_response" else False
+                            if not valid:
+                                print("Numero de message invalide")
+                        except ValueError:
+                            print("Le numero de message doit etre de type 'int'")
+                    selectedSubject = recv_msg(s)
+                    print(selectedSubject)
                 elif(number == "3"):
                     # TODO:
                     pass
