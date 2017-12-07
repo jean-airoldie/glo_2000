@@ -1,5 +1,5 @@
 from hashlib import sha256
-from socketUtil import recv_msg, send_msg
+from socketUtil69 import recv_msg, send_msg, SocketDisconnect
 import getpass
 import socket
 import os.path
@@ -8,6 +8,7 @@ import re
 import smtplib
 from email.mime.text import MIMEText
 import email.generator
+
 
 
 def main():
@@ -58,8 +59,8 @@ def main():
                             doit etre une adresse courriel")
     except socket.error as msg:
         print ("Socket Error: %s" % msg)
-    except TypeError as msg:
-        print ("(Le client s'est probablement deconnecte) Type Error: %s" % msg)
+    except SocketDisconnect as e:
+        print ("Client deconnecté : {}".format(e))
 
 
 def courriel(s, username):
@@ -103,9 +104,12 @@ def courriel(s, username):
                     subject = ".".join(fileName.split(".")[:-1])
                     subjectsList.append(subject)
             strBuffer = "\n"
-            for i, subject in enumerate(subjectsList):
-                 strBuffer += "{} : {}\n".format(i+1, subject)
-            send_msg(s, strBuffer)
+            if subjectsList:
+                for i, subject in enumerate(subjectsList):
+                     strBuffer += "{} : {}\n".format(i+1, subject)
+                send_msg(s, strBuffer)
+            else:
+                send_msg(s, "no_messages")
             valid = False
             while not valid:
                 subjectNumber = recv_msg(s)
@@ -113,32 +117,41 @@ def courriel(s, username):
                 if int(subjectNumber) > 0 and int(subjectNumber) < len(subjectsList) + 1:
                     valid = True
                     send_msg(s, "valid_response")
+                    strBuffer = ""
+                    with open(os.path.join(getServerPath(), username, "{}.elm".
+                                           format(subjectsList[int(subjectNumber) - 1])), "r") as f:
+                        strBuffer = "\n"
+                        for i, line in enumerate(f):
+                            if i > 3:
+                                strBuffer += line
+                        strBuffer += "\n"
+                    send_msg(s, strBuffer)
                 else:
                     send_msg(s, "invalid_response")
-            strBuffer = ""
-            with open(os.path.join(getServerPath(), username, "{}.elm".
-                                   format(subjectsList[int(subjectNumber) - 1])), "r") as f:
-                strBuffer = "\n"
-                for i, line in enumerate(f):
-                    if i > 3:
-                        strBuffer += line
-                strBuffer += "\n"
-            send_msg(s, strBuffer)
-
-
-
-
-
-
+                    break
 
         elif (number == "3"):
-            # TODO:
-            pass
+            userPath = os.path.join(getServerPath(), username)
+            count = 0
+            octets = 0
+            subjectsList = []
+            for fileName in os.listdir(userPath):
+                octets += os.path.getsize(os.path.join(userPath, fileName))
+                if fileName.split(".")[-1] == "elm":
+                    count += 1
+                    subject = ".".join(fileName.split(".")[:-1])
+                    subjectsList.append(subject)
+            strBuffer = "{} messages dans le dossier de {}\n".format(count, username)
+            strBuffer += "Taille total du dossier {} octets\n".format(octets)
+            if len(subjectsList) > 0:
+                for i, subject in enumerate(subjectsList):
+                    strBuffer += "{} : {}\n".format(i, subject)
+            else:
+                strBuffer += "Aucun messages dans le dossier de {}".format(username)
+            send_msg(s, strBuffer)
+
         elif (number == "4"):
             break
-
-
-
 
 def getServerPath():
     return os.path.dirname(os.path.realpath(__file__))
