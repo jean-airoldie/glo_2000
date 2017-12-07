@@ -24,10 +24,10 @@ class Client:
                     self.close()
 
     def close(self):
+        send_msg(self.s, "4")
         if self.is_connected:
             self.s.shutdown(2)
             self.s.close()
-        send_msg(self.s, "4")
         sys.exit(0)
 
     def on_keyboard_interrupt(self, signal, frame):
