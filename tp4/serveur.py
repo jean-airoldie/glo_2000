@@ -86,7 +86,11 @@ def courriel(s, username):
                         gen.flatten(msgToSend)
                     send_msg(s,"Le courriel a bien ete envoye!")
                 else:
+                    os.makedirs(os.path.join(getServerPath(), "DESTERREUR"), exist_ok = True)
                     send_msg(s,"Erreur : l'utilisateur n'existe pas")
+                    with open(os.path.join(getServerPath(),"DESTERREUR", subject + '.elm'), 'w') as out:
+                        gen = email.generator.Generator(out)
+                        gen.flatten(msgToSend)
             else:
                 try:
                     smtpConnection = smtplib.SMTP(host="smtp.ulaval.ca", timeout=10)
@@ -145,7 +149,7 @@ def courriel(s, username):
             strBuffer += "Taille total du dossier {} octets\n".format(octets)
             if len(subjectsList) > 0:
                 for i, subject in enumerate(subjectsList):
-                    strBuffer += "{} : {}\n".format(i, subject)
+                    strBuffer += "{} : {}\n".format(i+1, subject)
             else:
                 strBuffer += "Aucun messages dans le dossier de {}".format(username)
             send_msg(s, strBuffer)
