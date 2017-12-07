@@ -91,15 +91,7 @@ def menu(s):
                     selectedSubject = recv_msg(s)
                     print(selectedSubject)
                 elif(number == "3"):
-                    print("Nombre de messages contenu dans le dossier")
-                    obj.select('Inbox')
-                    print("Taille total du dossier en octets")
-                    filename = input("Nom du fichier : ")
-                    size = getsize(filename)
-                    print(str(size))
-
-                    input() # on attend que le user entre une touche pour retourner au menu
-                    
+                    pass
                 elif(number == "4"):
                     quit()
 
